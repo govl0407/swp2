@@ -24,6 +24,7 @@ def readScoreDB(dbfilename):
             kv = attr.split(":")
             record[kv[0]] = kv[1]
         scdb += [record]
+    return scdb
     
 
 
@@ -75,7 +76,6 @@ def doScoreDB(scoredb):
             print("Invalid command: " + parse[0]) 
 
 
-    fH.close()
 
 
 scoredb = readScoreDB(fname)
