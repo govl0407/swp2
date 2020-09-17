@@ -56,8 +56,19 @@ def doScoreDB(scoredb):
         parse = inputstr.split(" ")
 
         if parse[0] == 'add':
-            record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-            scoredb += [record]
+            try:
+                record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
+                scoredb += [record]
+            except IndexError :
+                print("you should type name, age and score")
+            """try :
+                a, b = int(record[1]), int(record[2])
+                    
+            except : 
+                scoredb += [record]
+            else :
+                print("age and score should be int")"""
+            
 
         elif parse[0] == 'del':
             for p in scoredb:
