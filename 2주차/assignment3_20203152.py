@@ -53,35 +53,93 @@ def doScoreDB(scoredb):
         inputstr = (input("Score DB > "))
         if inputstr == "":
             continue
+        
         parse = inputstr.split(" ")
 
         if parse[0] == 'add':
             try:
                 record = {'Name':parse[1], 'Age':parse[2], 'Score':parse[3]}
-                scoredb += [record]
+                if parse[1].isalpha()==True and parse[1].isdigit()==True and parse[1].isdigit()==True :
+                    scoredb += [record]
+                else :
+                    print("wrong input")
             except IndexError :
                 print("you should type name, age and score")
-            """try :
-                a, b = int(record[1]), int(record[2])
-                    
-            except : 
-                scoredb += [record]
-            else :
-                print("age and score should be int")"""
+
+            except KeyError:
+                print("Invalid command")
+
             
 
+                
+            
+        # del 명령시 scoredb중 일부를 읽지 않는 문제  
         elif parse[0] == 'del':
-            for p in scoredb:
-                if p['Name'] == parse[1]:
-                    scoredb.remove(p)
-                    break
+            try:
+                for p in scoredb:
+                    #print(p)
+                    if p['Name'] == parse[1]:
+                        print(p['Name']+"deleted")
+                        scoredb.remove(p)
+                    else :
+                        print(p['Name']+"alive")
+            except KeyError:
+                print("Invalid command")
+            except IndexError :
+                print("Invalid command")
+            
+
+
+
                     
         elif parse[0] == 'show':
-            sortKey ='Name' if len(parse) == 1 else parse[1]
-            showScoreDB(scoredb, sortKey)
+            try:
+                sortKey ='Name' if len(parse) == 1 else parse[1]
+                showScoreDB(scoredb, sortKey)
+            except KeyError:
+                print("Invalid command")
+            except IndexError :
+                print("Invalid command")
+
+
+
+        elif parse[0] =='find' :
+            try:
+                for p in scoredb:
+                    if p['Name'] == parse[1]:
+                        for attr in sorted(p):
+                            print(attr + "=" + p[attr], end=' ')
+                        print()
+            except KeyError:
+                print("Invalid command")
+            except IndexError :
+                print("Invalid command")
+
+
+
+        elif parse[0] =='inc' :
+            try:
+               for p in scoredb:
+                   if p['Name'] == parse[1]:
+                       k = int(p['Score'])
+                       n = str(k+int(parse[2]))
+                       p['Score'] = n
+            except KeyError:
+                print("Invalid command")
+            except IndexError :
+                print("Invalid command")
+                   
+                   
+    
 
         elif parse[0] == 'quit':
-            break
+            try:
+                break
+            
+            except KeyError:
+                print("Invalid command")
+            except IndexError :
+                print("Invalid command")
 
         else:
             print("Invalid command: " + parse[0]) 
@@ -93,13 +151,4 @@ scoredb = readScoreDB(fname)
 doScoreDB(scoredb)
 writeScoreDB(scoredb)
 
-#출력
-"""for line in fH:
-    words = line.split()
-    
-for word in wordcount:
-    if word in wordcount:
-        wordcount[word] += 1
-    else:
-        wordcount[word] = 1
-        """
+
